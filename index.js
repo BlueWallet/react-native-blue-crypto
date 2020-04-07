@@ -1,4 +1,4 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 
 const { BlueCrypto } = NativeModules;
 
@@ -6,6 +6,10 @@ export default BlueCrypto;
 
 
 module.exports = {
+
+  isAvailable: function() {
+    return typeof navigator !== 'undefined' && navigator.product === 'ReactNative' && Platform.OS === 'android';
+  },
 
   /**
    * Calculates SCRYPT hash
