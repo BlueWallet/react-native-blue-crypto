@@ -173,7 +173,6 @@ RCT_REMAP_METHOD(scrypt, scrypt:(NSString *)passwd
 #include <stdlib.h>
 #include <ctype.h>
 #include <sys/types.h>
-#include "mega.h"
 
 
 static const char Base64[] =
