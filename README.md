@@ -6,10 +6,8 @@
 
 ## Usage
 ```javascript
-import BlueCrypto from 'react-native-blue-crypto';
-
-// TODO: What to do with the module?
-BlueCrypto;
+  const bluecrypto = require("react-native-blue-crypto");
+  const hash = await bluecrypto.scrypt('022413a674b5bceab5abe0b14ce44dfa7fc6b55ecdbed88e7c50c0b4e953f1e05e', '059a548167010a9573418906');
 ```
 
 ## Based on 
