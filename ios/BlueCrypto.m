@@ -7,7 +7,7 @@ RCT_EXPORT_MODULE()
 
 
 
-RCT_REMAP_METHOD(scrypt, scrypt:(NSString *)passwd
+RCT_REMAP_METHOD(scrypt, scrypt:(NSArray *)pw
                  salt:(NSArray *)salt
                  N:(NSUInteger)N
                  r:(NSUInteger)r
@@ -18,10 +18,12 @@ RCT_REMAP_METHOD(scrypt, scrypt:(NSString *)passwd
 {
     int i, success;
     size_t saltLength;
+    size_t passLen;
     uint8_t hashbuf[dkLen];
     const uint8_t *parsedSalt;
+    const uint8_t *parsedPw;
     uint8_t *buffer = NULL;
-    const char* passphrase = [passwd UTF8String];
+    uint8_t *bufferP = NULL;
 
     saltLength = (int) [salt count];
     buffer = malloc(sizeof(uint8_t) * saltLength);
@@ -29,11 +31,18 @@ RCT_REMAP_METHOD(scrypt, scrypt:(NSString *)passwd
         buffer[i] = (uint8_t)[[salt objectAtIndex:i] integerValue];
     }
     parsedSalt = buffer;
-
-
+    
+    //
+    passLen = (int) [pw count];
+    bufferP = malloc(sizeof(uint8_t) * passLen);
+    for (i = 0; i <passLen; ++i) {
+        bufferP[i] = (uint8_t)[[pw objectAtIndex:i] integerValue];
+    }
+    parsedPw = bufferP;
+    //
 
     @try {
-        success = libscrypt_scrypt((uint8_t *)passphrase, strlen(passphrase), parsedSalt, saltLength, N, r, p, hashbuf, dkLen);
+        success = libscrypt_scrypt(parsedPw, passLen, parsedSalt, saltLength, N, r, p, hashbuf, dkLen);
     }
     @catch (NSException * e) {
         NSError *error = [NSError errorWithDomain:@"com.crypho.scrypt" code:200 userInfo:@{@"Error reason": @"Error in scrypt"}];

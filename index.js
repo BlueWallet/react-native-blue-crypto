@@ -26,12 +26,16 @@ module.exports = {
     if (Platform.OS === 'android') {
       return new Promise(function (resolve, reject) {
         BlueCrypto.scrypted(passphrase, salt, N, r, p, dkLen, function (result) {
-          resolve(result);
+          resolve(result.toLowerCase());
         });
       });
     } else {
-      // for ios native code we transform passphrase from hex to string and salt from hex to array of bytes
-      const passwd = Buffer.from(passphrase, 'hex').toString();
+      // for ios passphrase & salt from hex to array of bytes
+      const passwd = [];
+      for (const pair of Buffer.from(passphrase, 'hex').entries()) {
+        passwd.push(pair[1]);
+      }
+
       let slt = [];
       for (const pair of Buffer.from(salt, 'hex').entries()) {
         slt.push(pair[1]);
