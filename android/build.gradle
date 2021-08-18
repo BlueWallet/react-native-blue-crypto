@@ -36,6 +36,13 @@ buildscript {
         dependencies {
             classpath 'com.android.tools.build:gradle:3.4.1'
         }
+    } else {
+        repositories {
+          jcenter()
+        }
+
+        dependencies {
+          classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}")
     }
 }
 
