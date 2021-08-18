@@ -38,11 +38,12 @@ buildscript {
         }
     } else {
         repositories {
-          jcenter()
+            jcenter()
         }
 
         dependencies {
-          classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}")
+            classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault('kotlinVersion')}")
+        }
     }
 }
 
